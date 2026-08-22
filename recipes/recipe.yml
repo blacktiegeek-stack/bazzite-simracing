@@ -9,6 +9,7 @@ description: Bazzite + Sim Racing Utilities and Drivers
 base-image: ghcr.io/ublue-os/bazzite
 image-version: stable # You can pin to a specific version of Fedora as well
 
+modules:
   - type: containerfile
     snippets:
       - |
