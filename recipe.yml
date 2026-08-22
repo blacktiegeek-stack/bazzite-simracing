@@ -1,0 +1,15 @@
+name: bazzite-simracing
+description: Bazzite + Simagic FFB driver
+base-image: ghcr.io/ublue-os/bazzite:stable
+image-version: latest
+
+modules:
+  - type: containerfile
+    snippets:
+      - |
+        RUN KVER=$(rpm -q kernel-core --qf '%{VERSION}-%{RELEASE}.%{ARCH}\n' | tail -1) && \
+            dnf -y install dkms kernel-devel-${KVER} kernel-headers-${KVER} gcc make git && \
+            git clone https://github.com/JacKeTUs/simagic-ff /usr/src/simagic-ff-1.0 && \
+            dkms build -m simagic-ff -v 1.0 -k ${KVER} && \
+            dkms install -m simagic-ff -v 1.0 -k ${KVER} --no-depmod-run && \
+            depmod -a ${KVER}
